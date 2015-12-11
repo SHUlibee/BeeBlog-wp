@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 class Blog_Controller extends Base_Controller{
 	
 	public function index(){

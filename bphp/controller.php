@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**
  * 处理控制器
  * @author code29

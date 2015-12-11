@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**
  * 处理模型
  * @author bee

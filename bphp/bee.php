@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**
  * 框架入口
  * @author code29

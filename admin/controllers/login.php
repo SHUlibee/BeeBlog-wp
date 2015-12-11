@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 class Login_Controller extends Controller_Bphp{
 
     const P_ERROR = 1;
@@ -6,6 +6,7 @@ class Login_Controller extends Controller_Bphp{
 	public function __construct(){
 		parent::__construct();
 
+        $this->view->setMaster('simple');
 //		if(isset($_SESSION['account'])){
 //			$this->redirect('home');
 //		}
@@ -15,9 +16,9 @@ class Login_Controller extends Controller_Bphp{
         $pattern = isset($_GET['pattern']) ? $_GET['pattern'] : null;
 
         if($pattern == self::P_ERROR){
-            $this->view->render('login/view', $_GET, false);
+            $this->view->render('login/view', $_GET);
         }
-		$this->view->render('login/view', null, false);
+		$this->view->render('login/view');
 	}
 	
 	public function do_login(){

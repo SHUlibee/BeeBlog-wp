@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 class User_Controller extends Base_Controller{
 	public $template = 'user/browse';
 	

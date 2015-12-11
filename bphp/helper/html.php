@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**
  * 处理html标签
  * @author code29

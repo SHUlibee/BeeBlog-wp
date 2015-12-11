@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**
  * 处理视图
  * @author code29
@@ -11,7 +11,7 @@ class View_Bphp{
 	
     private static $suffix = '.htm';
 
-    private static $master = '/views/master';
+    private static $master = '';
 
     private static $_instance = NULL;
 
@@ -27,15 +27,14 @@ class View_Bphp{
      * 加载模版文件
      * @param String $template
      * @param array $data
-     * @param bool $use_master
      * @throws Error_Bphp
      */
-    public static function render($template, $data = NULL, $use_master = true){
+    public static function render($template, $data = NULL){
 		
 		if(trim($template) == '') throw new Error_Bphp('模版文件名不能为空！');
 		
-		self::$VIEW_FILE	= SERVER_ROOT .'/views/'.strtolower($template).self::$suffix;
-		self::$VIEW_MASTER	= SERVER_ROOT . self::$master .self::$suffix;
+		self::$VIEW_FILE	= SERVER_ROOT .'/views/' . strtolower($template).self::$suffix;
+		self::$VIEW_MASTER	= self::$master ? SERVER_ROOT . '/views/' . self::$master . self::$suffix : '';
 		
 		if(file_exists(self::$VIEW_FILE)){
 
@@ -46,8 +45,9 @@ class View_Bphp{
 					$$key = $d;
 				}
 			}
-			
-			if($use_master){
+
+            header('content-Type: text/html; charset=utf-8');
+			if(self::$VIEW_MASTER){
 				include(self::$VIEW_MASTER);
 			}else{
 				include(self::$VIEW_FILE);
