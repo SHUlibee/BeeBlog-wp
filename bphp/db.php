@@ -107,11 +107,11 @@ abstract class Db_Bphp{
 
         return empty($whereStr)?'':' WHERE '.$whereStr;
     }
-    protected function parseGroup($key) {
-        return $key;
+    protected function parseGroup($group) {
+        return !empty($group)? ' GROUP BY '.$group:'';
     }
-    protected function parseHaving($key) {
-        return $key;
+    protected function parseHaving($having) {
+        return  !empty($having)?   ' HAVING '.$having:'';
     }
     protected function parseOrder($key) {
         return $key;
@@ -132,6 +132,25 @@ abstract class Db_Bphp{
     protected function parseKey(&$key) {
         return $key;
     }
+
+    /**
+     * value分析
+     */
+    protected function parseValue($value) {
+        if(is_string($value)) {
+            $value =  '\''.addslashes($value).'\'';
+        }elseif(isset($value[0]) && is_string($value[0]) && strtolower($value[0]) == 'exp'){
+            $value =  addslashes($value[1]);
+        }elseif(is_array($value)) {
+            $value =  array_map(array($this, 'parseValue'),$value);
+        }elseif(is_bool($value)){
+            $value =  $value ? '1' : '0';
+        }elseif(is_null($value)){
+            $value =  'null';
+        }
+        return $value;
+    }
+
     /**
      * 生成查询SQL
      */
@@ -163,7 +182,33 @@ abstract class Db_Bphp{
     }
 
     /**
+     * @param $data
+     * @param array $options
+     * @param bool $replace
+     * @return mixed
+     */
+    public function insert($data,$options=array(),$replace=false) {
+        $values  =  $fields    = array();
+        foreach ($data as $key=>$val){
+            if(is_array($val) && 'exp' == $val[0]){
+                $fields[]   =  $this->parseKey($key);
+                $values[]   =  $val[1];
+            }elseif(is_scalar($val) || is_null($val)) { // 过滤非标量数据
+                $fields[]   =  $this->parseKey($key);
+                $values[]   =  $this->parseValue($val);
+            }
+        }
+        $sql   =  ($replace?'REPLACE':'INSERT').' INTO '.$this->parseTable($options['table']).' ('.implode(',', $fields).') VALUES ('.implode(',', $values).')';
+        return $this->execute($sql);
+    }
+
+    /**
      * 数据库连接
      */
     abstract public function connect($link);
+
+    /**
+     * 执行sql语句
+     */
+    abstract public function execute($sql);
 }

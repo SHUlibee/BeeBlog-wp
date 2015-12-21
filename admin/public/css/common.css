@@ -1,0 +1,22 @@
+
+#frame{
+    min-height: 530px;
+}
+
+.fromParent{
+    width: 100%;
+}
+
+
+@media only screen and (max-width: 990px) {
+    #login{
+        margin: 50px;
+    }
+}
+
+
+@media only screen and (max-width: 768px) {
+    #login{
+        margin: 15px;
+    }
+}

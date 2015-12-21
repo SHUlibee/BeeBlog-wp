@@ -9,7 +9,12 @@ class Base_Controller extends Controller_Bphp{
 			//域名自动补齐
 			$this->redirect('login');
 		}
-		
+
+        $this->view->setMaster('main');
+
+        $this->init();
 	}
-	
+
+    protected function init(){}
+
 }

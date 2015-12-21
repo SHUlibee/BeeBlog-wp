@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 class Login_Controller extends Controller_Bphp{
 
     const P_ERROR = 1;
@@ -7,12 +7,13 @@ class Login_Controller extends Controller_Bphp{
 		parent::__construct();
 
         $this->view->setMaster('simple');
-//		if(isset($_SESSION['account'])){
-//			$this->redirect('home');
-//		}
 	}
 	
 	public function index(){
+        if(isset($_SESSION['account'])){
+            $this->redirect('home');
+        }
+
         $pattern = isset($_GET['pattern']) ? $_GET['pattern'] : null;
 
         if($pattern == self::P_ERROR){
@@ -26,7 +27,7 @@ class Login_Controller extends Controller_Bphp{
 		$acc = $_POST['log'];
 		$pwd = $_POST['pwd'];
 
-		$User = new User_Model();
+		$User = $this->load->model('user');
 		$user = $User->get_user_by_account($acc);
 
 		if($pwd && isset($user) && $pwd == $user->password){

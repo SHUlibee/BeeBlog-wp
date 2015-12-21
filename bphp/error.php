@@ -10,6 +10,7 @@ class Error_Bphp extends Exception{
         $str = "
             <h3>Error in $this->file at line $this->line : $this->message</h3><hr />
         ";
+        header('Content-type: text/html; charset: utf-8');
         echo $str;
     }
 }

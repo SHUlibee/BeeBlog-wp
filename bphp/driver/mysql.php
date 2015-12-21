@@ -67,4 +67,8 @@ class Mysql_Driver_Bphp extends Db_Bphp{
         }
         return $key;
     }
+
+    public function close($conn){
+        mysql_close($conn);
+    }
 }

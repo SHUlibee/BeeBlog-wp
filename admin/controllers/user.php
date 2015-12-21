@@ -4,8 +4,7 @@ class User_Controller extends Base_Controller{
 	
 	public function index(){
 
-//        使用装载器进行装载模型
-//        $User = new User_Model();
+//        使用装载器进行装载模型-保证单例
         $User = $this->load->model('User');
         $user = $User->get_user();
 
