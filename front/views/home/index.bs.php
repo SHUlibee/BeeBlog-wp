@@ -9,7 +9,7 @@
             </div>
             <div class="panel-footer">
                 <ul class="list-inline">
-                    <li class="list-group-item">2015年10月25日</li>
+                    <li class="list-group-item"><?php echo date('Y年m月d日 H:i', $blog->create_time);?></li>
                     <li class="list-group-item">bee</li>
                     <li class="list-group-item"><?php echo $blog->tags;?></li>
                     <li class="list-group-item">评论</li>

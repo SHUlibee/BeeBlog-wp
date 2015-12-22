@@ -23,8 +23,7 @@ class View_Bphp{
     }
 
     /**
-     * 方案二
-     * 加载模版文件
+     * 加载模版文件，渲染后，结束程序
      * @param String $template
      * @param array $data
      * @throws Error_Bphp
@@ -53,7 +52,7 @@ class View_Bphp{
 				include(self::$VIEW_FILE);
 			}
 		}
-//		die;
+		die;
 	}
 	
 	/**

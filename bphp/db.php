@@ -118,6 +118,23 @@ abstract class Db_Bphp{
     }
 
     /**
+     * set分析
+     * @access protected
+     * @param array $data
+     * @return string
+     */
+    protected function parseSet($data) {
+        foreach ($data as $key=>$val){
+            if(is_array($val) && 'exp' == $val[0]){
+                $set[]  =   $this->parseKey($key).'='.$val[1];
+            }elseif(is_scalar($val) || is_null($val)) { // 过滤非标量数据
+                $set[]  =   $this->parseKey($key).'='.$this->parseValue($val);
+            }
+        }
+        return ' SET '.implode(',',$set);
+    }
+
+    /**
      * limit分析
      */
     protected function parseLimit($limit) {
@@ -199,6 +216,23 @@ abstract class Db_Bphp{
             }
         }
         $sql   =  ($replace?'REPLACE':'INSERT').' INTO '.$this->parseTable($options['table']).' ('.implode(',', $fields).') VALUES ('.implode(',', $values).')';
+        return $this->execute($sql);
+    }
+
+    /**
+     * 更新记录
+     * @access public
+     * @param mixed $data 数据
+     * @param array $options 表达式
+     * @return false | integer
+     */
+    public function update($data,$options) {
+        $sql   = 'UPDATE '
+            .$this->parseTable($options['table'])
+            .$this->parseSet($data)
+            .$this->parseWhere(!empty($options['where'])?$options['where']:'')
+            .$this->parseOrder(!empty($options['order'])?$options['order']:'')
+            .$this->parseLimit(!empty($options['limit'])?$options['limit']:'');
         return $this->execute($sql);
     }
 

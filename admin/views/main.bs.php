@@ -75,6 +75,7 @@
                         <ul class="nav nav-pills nav-stacked">
                             <li id="blog-index"><a class="text-right" href="/admin/blog/index">所有文章</a></li>
                             <li id="blog-add"><a class="text-right" href="/admin/blog/add">写文章</a></li>
+                            <li id="category-index"><a class="text-right" href="/admin/category/index">分类目录</a></li>
                         </ul>
                     </div>
                 </li>
@@ -83,8 +84,16 @@
         <!-- 教小屏显示 -->
         <div class="hidden-lg hidden-md col-sm-1 col-xs-1">
             <ul class="nav nav-pills nav-stacked">
-                <li><a><span class="glyphicon glyphicon-asterisk"></span></a></li>
-                <li><a><span class="glyphicon glyphicon-pencil"></span></a></li>
+                <li>
+                    <a class="btn btn-default" id="menu-min-home" tabindex="0" role="button" data-toggle="popover" data-trigger="focus" title="系统" data-placement="right" data-html="true">
+                        <span class="glyphicon glyphicon-asterisk"></span>
+                    </a>
+                </li>
+                <li>
+                    <a class="btn btn-default" id="menu-min-blog" tabindex="0" role="button" data-toggle="popover" data-trigger="focus" title="文章" data-placement="right" data-html="true">
+                        <span class="glyphicon glyphicon-pencil"></span>
+                    </a>
+                </li>
             </ul>
         </div>
         <div class="col-lg-10 col-md-10 col-sm-11 col-xs-11">
@@ -110,4 +119,21 @@
     <?php global $BEE;?>
     var lid = "<?php echo $BEE->getCtrl().'-'.$BEE->getFunc();?>";
     $("#"+lid).addClass("active");
+
+    $(function(){
+        $('[data-toggle="popover"]').popover();
+
+        var menuBlog =
+            '<div class="btn-group-vertical" role="group">' +
+                '<a class="btn btn-default" href="/admin/blog/index">所有文章</a>' +
+                '<a class="btn btn-default" href="/admin/blog/add">写文章</a>' +
+                '<a class="btn btn-default" href="/admin/category/index">分类目录</a>' +
+            '</div>';
+        $('#menu-min-blog').attr('data-content', menuBlog);
+        var menuHome =
+            '<div class="btn-group-vertical" role="group">' +
+                '<a class="btn btn-default" href="/admin/home/index">首页</a>' +
+            '</div>';
+        $('#menu-min-home').attr('data-content', menuHome);
+    });
 </script>

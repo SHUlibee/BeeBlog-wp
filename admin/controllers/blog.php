@@ -22,11 +22,33 @@ class Blog_Controller extends Base_Controller{
 
         if($_POST){
             $res = $this->blog->add($_POST);
-            var_dump($res); die;
         }
 
         $this->view->render('blog/add');
     }
 
+    public function edit(){
+        if($_GET['id']){
+            $res = $this->blog->get_id($_GET['id']);
+
+            $data['blog'] = $res;
+            $this->view->render('blog/edit', $data);
+        }
+
+        if($_POST){
+            $res = $this->blog->edit($_POST, $_POST['id']);
+
+            $this->redirect('blog/edit?id='.$_POST['id']);
+        }
+
+    }
+
+    public function recoup(){
+        if($_GET['id']){
+            $res = $this->blog->recoup($_GET['id']);
+        }
+
+        $this->redirect('blog');
+    }
 
 }

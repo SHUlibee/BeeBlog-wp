@@ -23,10 +23,10 @@
                     <td><?php echo $blog->category_id; ?></td>
                     <td><?php echo $blog->tags; ?></td>
                     <td><a href="#"><span class="badge" title="查看">2</span></a></td>
-                    <td><?php echo $blog->create_time; ?></td>
+                    <td><?php echo date('Y-m-d H:i', $blog->create_time); ?></td>
                     <td>
-                        <a href="#"><span class="glyphicon glyphicon-pencil" title="编辑"></span></a>
-                        <a href="#"><span class="glyphicon glyphicon-trash" title="垃圾箱"></span></a>
+                        <a href="/admin/blog/edit?id=<?php echo $blog->id;?>"><span class="glyphicon glyphicon-pencil" title="编辑"></span></a>
+                        <a href="/admin/blog/recoup?id=<?php echo $blog->id?>"><span class="glyphicon glyphicon-trash" title="垃圾箱"></span></a>
                     </td>
                 </tr>
             <?php endforeach;?>

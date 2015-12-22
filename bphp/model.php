@@ -58,11 +58,13 @@ class Model_Bphp{
      * @return mixed
      */
     public function find(){
+        if(!isset($this->options['table']) || !$this->options['table']) throw new Error_Bphp("table必填");
         $this->options['limit'] = 1;
         $res = $this->db->query($this->options);
         return isset($res[0]) ? $res[0] : NULL;
     }
     public function select(){
+        if(!isset($this->options['table']) || !$this->options['table']) throw new Error_Bphp("table必填");
         $res = $this->db->query($this->options);
 		return $res;
 	}
@@ -73,8 +75,10 @@ class Model_Bphp{
         return $res;
     }
 
-    public function update(){
-
+    public function update($data){
+        if(!isset($this->options['table']) || !$this->options['table']) throw new Error_Bphp("table必填");
+        $res = $this->db->update($data, $this->options);
+        return $res;
     }
 
     public function delete(){

@@ -16,6 +16,7 @@ class Blog_Model extends Model_Bphp{
     }
 
     public function get($where = '', $limit = ''){
+        $where['status ='] = 0;
 
         $res = $this->from($this->tb_blog)
             ->where($where)
